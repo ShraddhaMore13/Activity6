@@ -82,32 +82,15 @@
                 ///////////////////////////////////////////////////////////
                 // Step 3 contour generator
 
-                
-                
-                
-                
                 const colors = d3.scaleLinear()
-                .domain([minThreshold, maxThreshold/2, maxThreshold]) //generate with min max value fill domain  step count
-                    //.domain(d3.range([minThreshold, (minThreshold + maxThreshold) / 2, maxThreshold]))  //generate with min max value fill domain  step count
+                    .domain(d3.range(minThreshold, maxThreshold, 1.5*(maxThreshold - minThreshold )/binCount))  //generate with min max value fill domain
                     .range(["#0d1a50", "#3e5eba", "#2b83ba", "#abdda4", "#ffffbf", "#fdae61", "#d7191c"])
-                   
                     .interpolate(d3.interpolateHcl);
-
-         
 
 
                 let contours = d3.contours()
                     .size([m, n])
-                   // .thresholds()(values_density); // Using threshold  //fill thisfunction
-                    //.thresholds(d3.ranged3.range([minThreshold, (minThreshold + maxThreshold) / 2, maxThreshold]))
-       // (values_density);
-       .thresholds(
-        Array.from(
-            { length: binCount + 1 }, 
-            (_, i) => minThreshold + (i * ((maxThreshold - minThreshold) / binCount))
-        )
-    )(values_density);
-
+                    .thresholds(d3.range(minThreshold, maxThreshold, (maxThreshold - minThreshold )/binCount ))(values_density); // Using threshold  //fill thisfunction
 
 
                 // Step 3 append contour to path (d)
@@ -130,9 +113,7 @@
 
                 contours = d3.contours()
                     .size([m, n])
-                   // .thresholds(d3.range(min_max[0],min_max[1],threshold)) // threshold is 6 degrees
-                    //(values_density);
-                    .thresholds(d3.range(minThreshold, maxThreshold, threshold))
+                    .thresholds(d3.range(min_max[0],min_max[1],threshold)) // threshold is 6 degrees
                     (values_density);
 
 
@@ -198,9 +179,8 @@
         selectElement.attr("size", files_data.length);
 
     }
-//.range(["#4d0000", "#ff0000", "#ff6666", "#ff9999", "#ffcccc", "#ffe5e5", "#ffffff"])  // Red tones
+
 
 </script>
 </body>
 </html>
-
